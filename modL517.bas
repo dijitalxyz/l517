@@ -35,7 +35,7 @@ Private Declare Function GetWindowsDirectory Lib "kernel32" Alias "GetWindowsDir
 
 'websource declares
 Private Declare Function InternetOpen Lib "wininet.dll" Alias "InternetOpenA" (ByVal sAgent As String, ByVal lAccessType As Long, ByVal sProxyName As String, ByVal sProxyBypass As String, ByVal lFlags As Long) As Long
-Private Declare Function InternetOpenUrl Lib "wininet.dll" Alias "InternetOpenUrlA" (ByVal hInternetSession As Long, ByVal surl As String, ByVal sHeaders As String, ByVal lHeadersLength As Long, ByVal lFlags As Long, ByVal lContext As Long) As Long
+Private Declare Function InternetOpenUrl Lib "wininet.dll" Alias "InternetOpenUrlA" (ByVal hInternetSession As Long, ByVal sUrl As String, ByVal sHeaders As String, ByVal lHeadersLength As Long, ByVal lFlags As Long, ByVal lContext As Long) As Long
 Private Declare Function InternetReadFile Lib "wininet.dll" (ByVal hFile As Long, ByVal sBuffer As String, ByVal lNumBytesToRead As Long, lNumberOfBytesRead As Long) As Integer
 Private Declare Function InternetCloseHandle Lib "wininet.dll" (ByVal hInet As Long) As Integer
 
@@ -158,11 +158,11 @@ Public Sub Main()
     
     Dim b_installed As Boolean, s$
     
-    b_installed = ExtractAndRegister("OCX", 101&, "MSCOMCTL.OCX")
+    'b_installed = ExtractAndRegister("OCX", 101&, "MSCOMCTL.OCX")
     
     If b_installed = False Then
         s$ = "MSCOMCTL.OCX" + vbCrLf
-        MsgBox "the following component was unable to be installed: " + s$ + vbCrLf + "if the program errors on load, try right-clicking L517.exe and selecting 'Run As Administrator'.", vbCritical + vbOKOnly, "L517"
+        'MsgBox "the following component was unable to be installed: " + s$ + vbCrLf + "if the program errors on load, try right-clicking L517.exe and selecting 'Run As Administrator'.", vbCritical + vbOKOnly, "L517"
     End If
     
     Load frmMain
@@ -278,7 +278,7 @@ Public Function FilterCheck(ByRef txt$) As Boolean
     'notice that everytime this function is called, a special 'temporary' variable made
     'when calling this function, EXPECT the passed argument to return the fixed, filtered word!!!
     
-    Dim iMin%, iMax%, tleft$, tright$
+    Dim iMin%, imax%, tleft$, tright$
     
     If txt$ = "" Then
         FilterCheck = False
@@ -286,7 +286,7 @@ Public Function FilterCheck(ByRef txt$) As Boolean
     End If
     
     iMin% = CInt(frmMain.mnuFilterLenMin.Tag)
-    iMax% = CInt(frmMain.mnuFilterLenMax.Tag)
+    imax% = CInt(frmMain.mnuFilterLenMax.Tag)
     tleft$ = frmMain.mnuFilterTextLeft.Tag
     tright$ = frmMain.mnuFilterTextRight.Tag
     
@@ -295,7 +295,7 @@ Public Function FilterCheck(ByRef txt$) As Boolean
         Exit Function
     End If
     
-    If iMax% > 0 And Len(txt$) > iMax% Then
+    If imax% > 0 And Len(txt$) > imax% Then
         FilterCheck = False
         Exit Function
     End If
@@ -539,10 +539,11 @@ Public Sub prog(perc#)
     frmMain.lblProg.Caption = s$ + "%"
     
 End Sub
-Public Sub ParseWebData(sDat$)
+Public Function ParseWebData&(sDat$)
     'used to extract out non-HTML and non-code words from a site
     'sdat is the webpage source
-    Dim i&, j&, stxt$, schar$, itemp&
+    Dim i&, j&, stxt$, schar$, itemp&, count&
+    count& = 0
     
     'remove SCRIPT tags (usually contains code)
     i& = InStr(sDat$, "<script")
@@ -585,6 +586,7 @@ Public Sub ParseWebData(sDat$)
             ElseIf stxt$ <> "" Then
                 If FilterCheck(stxt$) = True Then
                     frmMain.lst.ListItems().Add , , stxt$
+                    count& = count& + 1
                 End If
                 stxt$ = ""
             End If
@@ -593,8 +595,11 @@ Public Sub ParseWebData(sDat$)
     
     If stxt$ <> "" And FilterCheck(stxt$) = True Then
         frmMain.lst.ListItems().Add , , stxt$
+        count& = count& + 1
     End If
-End Sub
+    
+    ParseWebData& = count&
+End Function
 Public Function CaseFirst$(txt$)
     'sets first letter of string [and every letter after space] to upper case, the rest lower
     Dim i&, ch$, bnext As Boolean, sall$
@@ -611,11 +616,27 @@ Public Function CaseFirst$(txt$)
     Next i&
     CaseFirst$ = sall$
 End Function
+Public Function CaseLeet0$(sword$)
+    Dim lword%(), i%, s$
+    
+    ReDim lword%(Len(sword$))
+    For i% = 0 To UBound(lword%())
+        lword%(i%) = 0
+    Next i%
+    lword%(0) = 1
+    
+    Do
+        DoEvents
+        s$ = ""
+        For i% = 0 To UBound(lword%())
+            s$ = s$ + LetterToLeet$(Mid(sword$, i% + 1, 1), lword%(i%))
+        Next i%
+        
+    Loop Until i% = -1
+End Function
 Public Function CaseLeet$(sword$)
     'new method of converting to leetspeak
-    'will generate every possible mutation of the word
-    'txt$ is passed *by reference*
-    'this means that txt$ will be the value(s) of the leetspeak AFTER this function is called.
+    'will generate every possible mutation of the word (DOESN'T)
     Dim s$, i%, j%, lword%(), sreturn$, a%
     
     'setup intiial conditions
@@ -627,6 +648,10 @@ Public Function CaseLeet$(sword$)
     
     Do
         DoEvents
+        If frmMain.lblCancel.Visible = False Then
+            CaseLeet$ = sreturn$
+            Exit Function
+        End If
         s$ = ""
         For i% = 0 To UBound(lword%())
             s$ = s$ + LetterToLeet$(Mid(sword$, i% + 1, 1), lword%(i%))
@@ -661,7 +686,7 @@ Public Function CaseLeet$(sword$)
     
     CaseLeet$ = sreturn$
 End Function
-Private Function LetterToLeet$(letter$, index%)
+Private Function LetterToLeet$(letter$, Index%)
     Dim sa$()
     
     If letter$ = "" Then
@@ -671,10 +696,10 @@ Private Function LetterToLeet$(letter$, index%)
     
     If Asc(LCase(letter$)) >= Asc("a") And Asc(LCase(letter$)) <= Asc("z") Then
         sa$() = Split(SALPH$(Asc(LCase(letter$)) - 97), ",")
-        If UBound(sa$()) < index% Then
+        If UBound(sa$()) < Index% Then
             LetterToLeet$ = letter$
         Else
-            LetterToLeet$ = sa$(index%)
+            LetterToLeet$ = sa$(Index%)
         End If
     Else
         LetterToLeet$ = letter$
@@ -967,7 +992,7 @@ Public Function BytesToString$(ByVal num#)
         Exit Function
     End If
     
-    mb# = kb# ^ 2
+    mb# = kb# * kb#
     If num# < mb# Then
         num# = num# / kb#
         s$ = CStr(num#)
@@ -976,7 +1001,7 @@ Public Function BytesToString$(ByVal num#)
         Exit Function
     End If
     
-    gb# = mb# ^ 2
+    gb# = mb# * kb#
     If num# < gb# Then
         num# = num# / mb#
         s$ = CStr(num#)
@@ -985,7 +1010,7 @@ Public Function BytesToString$(ByVal num#)
         Exit Function
     End If
     
-    tb# = gb# ^ 2
+    tb# = gb# * kb#
     If num# < tb# Then
         num# = num# / gb#
         s$ = CStr(num#)
@@ -994,7 +1019,7 @@ Public Function BytesToString$(ByVal num#)
         Exit Function
     End If
     
-    pb# = tb# ^ 2
+    pb# = tb# * kb#
     If num# < pb# Then
         num# = num# / tb#
         s$ = CStr(num#)
@@ -1003,7 +1028,7 @@ Public Function BytesToString$(ByVal num#)
         Exit Function
     End If
     
-    eb# = pb# ^ 2
+    eb# = pb# * kb#
     If num# < eb# Then
         num# = num# / pb#
         s$ = CStr(num#)
@@ -1736,37 +1761,28 @@ End Function
 'end directory dialog functions
 
 'web functions
-Public Function webgetsource$(surl$)
-    'grabs HTML source from a website
+Public Function webgetsource$(site$)
+    On Error GoTo error_happened
+    Dim objHttp As Object, strURL As String, strText As String
     
-    Dim sBuffer As String * BUFFER_LEN, iresult%, sdata$
-    Dim hInternet&, hSession&, lReturn&
+    Set objHttp = CreateObject("MSXML2.ServerXMLHTTP")
     
-    'get the handle of the current internet connection
-    hSession = InternetOpen("Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040613 Firefox/0.8.0+", 1, vbNullString, vbNullString, 0)
-    
-    'get the handle of the url
-    If hSession Then hInternet = InternetOpenUrl(hSession&, surl$, vbNullString, 0, IF_NO_CACHE_WRITE, 0)
-    
-    'if we have the handle, then start reading the web page
-    If hInternet Then
-        
-        'get the first chunk & buffer it.
-        iresult% = InternetReadFile(hInternet&, sBuffer$, BUFFER_LEN, lReturn&)
-        sdata$ = sBuffer$
-        
-        'if there's more data then keep reading it into the buffer
-        Do While lReturn& <> 0
-            DoEvents
-            iresult% = InternetReadFile(hInternet&, sBuffer$, BUFFER_LEN, lReturn&)
-            sdata$ = sdata$ + Mid(sBuffer$, 1, lReturn&)
-        Loop
-        
+    strURL = site$
+    If Left(LCase(strURL$), Len("http")) <> "http" Then
+        strURL$ = "http://" + strURL$
     End If
     
-    'close the URL
-    iresult = InternetCloseHandle(hInternet&)
+    objHttp.Open "GET", strURL, False
+    objHttp.setRequestHeader "User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13"
+    objHttp.Send ("")
     
-    webgetsource$ = sdata$
+    strText = objHttp.responseText
+
+    Set objHttp = Nothing
+    
+    webgetsource$ = strText$
+    Exit Function
+error_happened:
+    webgetsource$ = ""
 End Function
 'end web functions
