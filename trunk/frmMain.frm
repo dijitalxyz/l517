@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
-   BackColor       =   &H80000005&
+   BackColor       =   &H00000000&
    BorderStyle     =   0  'None
    ClientHeight    =   5085
    ClientLeft      =   2970
@@ -25,18 +25,44 @@ Begin VB.Form frmMain
    MaxButton       =   0   'False
    MinButton       =   0   'False
    OLEDropMode     =   1  'Manual
-   Picture         =   "frmMain.frx":08CA
    ScaleHeight     =   5085
    ScaleWidth      =   3225
    ShowInTaskbar   =   0   'False
    Visible         =   0   'False
+   Begin MSComctlLib.ListView lst 
+      Height          =   3855
+      Left            =   120
+      TabIndex        =   21
+      Top             =   600
+      Width           =   3015
+      _ExtentX        =   5318
+      _ExtentY        =   6800
+      View            =   3
+      LabelEdit       =   1
+      Sorted          =   -1  'True
+      LabelWrap       =   -1  'True
+      HideSelection   =   0   'False
+      HideColumnHeaders=   -1  'True
+      OLEDropMode     =   1
+      FullRowSelect   =   -1  'True
+      _Version        =   393217
+      ForeColor       =   16777215
+      BackColor       =   0
+      Appearance      =   0
+      OLEDropMode     =   1
+      NumItems        =   1
+      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Text            =   "passwords"
+         Object.Width           =   4410
+      EndProperty
+   End
    Begin VB.PictureBox picWelcome 
       BackColor       =   &H00C0C0C0&
       Height          =   2295
       Left            =   345
       ScaleHeight     =   2235
       ScaleWidth      =   2475
-      TabIndex        =   18
+      TabIndex        =   17
       Top             =   1320
       Visible         =   0   'False
       Width           =   2535
@@ -55,7 +81,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   375
          Left            =   0
-         TabIndex        =   21
+         TabIndex        =   20
          Top             =   1920
          Width           =   2535
       End
@@ -75,7 +101,7 @@ Begin VB.Form frmMain
          Height          =   240
          Left            =   30
          MousePointer    =   2  'Cross
-         TabIndex        =   20
+         TabIndex        =   19
          Top             =   1425
          Width           =   2475
          WordWrap        =   -1  'True
@@ -95,7 +121,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   1215
          Left            =   255
-         TabIndex        =   19
+         TabIndex        =   18
          Top             =   0
          Width           =   2100
       End
@@ -104,7 +130,7 @@ Begin VB.Form frmMain
       Appearance      =   0  'Flat
       Height          =   750
       Left            =   2040
-      TabIndex        =   12
+      TabIndex        =   11
       TabStop         =   0   'False
       Top             =   5280
       Visible         =   0   'False
@@ -114,7 +140,7 @@ Begin VB.Form frmMain
       Appearance      =   0  'Flat
       Height          =   750
       Left            =   1320
-      TabIndex        =   11
+      TabIndex        =   10
       TabStop         =   0   'False
       Top             =   5280
       Visible         =   0   'False
@@ -124,59 +150,21 @@ Begin VB.Form frmMain
       Appearance      =   0  'Flat
       Height          =   900
       Left            =   240
-      TabIndex        =   10
+      TabIndex        =   9
       TabStop         =   0   'False
       Top             =   5280
       Visible         =   0   'False
       Width           =   855
    End
-   Begin MSComctlLib.ListView lst 
-      Height          =   3600
-      Left            =   105
-      TabIndex        =   4
-      Top             =   675
-      Width           =   3030
-      _ExtentX        =   5345
-      _ExtentY        =   6350
-      View            =   3
-      LabelEdit       =   1
-      Sorted          =   -1  'True
-      LabelWrap       =   0   'False
-      HideSelection   =   0   'False
-      HideColumnHeaders=   -1  'True
-      OLEDropMode     =   1
-      FullRowSelect   =   -1  'True
-      PictureAlignment=   5
-      _Version        =   393217
-      ForeColor       =   -2147483640
-      BackColor       =   8421504
-      Appearance      =   0
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Courier New"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      OLEDropMode     =   1
-      NumItems        =   1
-      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
-         Object.Width           =   4410
-      EndProperty
-      Picture         =   "frmMain.frx":451C
-   End
    Begin VB.PictureBox picP 
       Appearance      =   0  'Flat
-      BackColor       =   &H8000000D&
+      BackColor       =   &H00808080&
       ForeColor       =   &H80000008&
       Height          =   3435
       Left            =   120
-      Picture         =   "frmMain.frx":6FE7
       ScaleHeight     =   3405
       ScaleWidth      =   2985
-      TabIndex        =   8
+      TabIndex        =   7
       TabStop         =   0   'False
       Top             =   720
       Visible         =   0   'False
@@ -200,7 +188,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   2580
       OLEDropMode     =   1  'Manual
-      TabIndex        =   17
+      TabIndex        =   16
       Top             =   4830
       Width           =   645
    End
@@ -222,7 +210,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   0
       OLEDropMode     =   1  'Manual
-      TabIndex        =   16
+      TabIndex        =   15
       Top             =   4830
       Width           =   3195
    End
@@ -246,7 +234,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   -15
       OLEDropMode     =   1  'Manual
-      TabIndex        =   15
+      TabIndex        =   14
       Top             =   0
       Width           =   300
    End
@@ -270,7 +258,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   2925
       OLEDropMode     =   1  'Manual
-      TabIndex        =   14
+      TabIndex        =   13
       Top             =   0
       Width           =   300
    End
@@ -390,7 +378,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   0
       OLEDropMode     =   1  'Manual
-      TabIndex        =   13
+      TabIndex        =   12
       Top             =   0
       Width           =   3255
    End
@@ -401,10 +389,10 @@ Begin VB.Form frmMain
       BackStyle       =   0  'Transparent
       BorderStyle     =   1  'Fixed Single
       Caption         =   "CANCEL"
-      ForeColor       =   &H80000008&
+      ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   0
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   2040
       Visible         =   0   'False
       Width           =   855
@@ -429,7 +417,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   2145
       OLEDropMode     =   1  'Manual
-      TabIndex        =   7
+      TabIndex        =   6
       Top             =   4500
       Width           =   975
    End
@@ -453,7 +441,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   60
       OLEDropMode     =   1  'Manual
-      TabIndex        =   6
+      TabIndex        =   5
       Top             =   4500
       Width           =   735
    End
@@ -477,7 +465,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   1050
       OLEDropMode     =   1  'Manual
-      TabIndex        =   5
+      TabIndex        =   4
       Top             =   4500
       Width           =   855
    End
@@ -535,8 +523,14 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuCaseEveryother 
          Caption         =   "&eVeRy OtHeR uPpEr"
       End
+      Begin VB.Menu mnuCaseDash2 
+         Caption         =   "-"
+      End
       Begin VB.Menu mnuCaseLeet 
          Caption         =   "&1337c4s3 (mutations!)"
+      End
+      Begin VB.Menu mnuCaseLeetEdit 
+         Caption         =   "&edit ""leetspeak"" ..."
       End
    End
    Begin VB.Menu mnuAppend 
@@ -640,12 +634,12 @@ Begin VB.Form frmMain
          End
       End
       Begin VB.Menu mnuFileProfiles 
-         Caption         =   "&presets"
+         Caption         =   "length &presets"
          Begin VB.Menu mnuFilesProfilesWPA 
-            Caption         =   "&wpa passwords"
+            Caption         =   "&wpa passwords (length 8-63)"
          End
          Begin VB.Menu mnuFileProfilesWeb 
-            Caption         =   "web &passwords"
+            Caption         =   "web &passwords (length 4-12)"
          End
       End
       Begin VB.Menu mnuFileDash2 
@@ -713,6 +707,12 @@ Begin VB.Form frmMain
          Begin VB.Menu mnuGenStringHelp 
             Caption         =   "what does this do?"
          End
+         Begin VB.Menu mnuGenStringDash0 
+            Caption         =   "-"
+         End
+         Begin VB.Menu mnuGenStringEdit 
+            Caption         =   "edit list of charsets"
+         End
          Begin VB.Menu mnuGenStringDash1 
             Caption         =   "-"
          End
@@ -778,6 +778,12 @@ Begin VB.Form frmMain
          End
          Begin VB.Menu mnuGenPhoneNoarea 
             Caption         =   "[prefix]-####"
+         End
+         Begin VB.Menu mnuGenPhoneDash2 
+            Caption         =   "-"
+         End
+         Begin VB.Menu mnuGenPhoneCustom 
+            Caption         =   "custom..."
          End
       End
       Begin VB.Menu mnuGenDash3 
@@ -870,6 +876,15 @@ Attribute VB_Exposed = False
 
 'version history
 
+'0.96: added leetspeak/charset editing -- removed charset.lst and leetspeak.txt
+
+
+'0.95: lots of random fixes
+
+'0.94: fixed string generator bug
+
+'0.93: removed mscomctl.ocx from the resource file - no more AV alerts
+
 '0.8 : language support for:
 '       -english
 '       -french
@@ -900,6 +915,40 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Public B_CHANGE As Boolean, B_MOUSEDOWN As Boolean, C_MOVER As Boolean, C_FORMX As Single, C_FORMY As Single, LANGUAGE$, RESUME_STRING$
+
+Public Function defaultCharset$()
+    Dim s$
+         s$ = "numeric                          = [0123456789]" + vbCrLf
+    s$ = s$ + "numeric-space                    = [0123456789 ]" + vbCrLf
+    s$ = s$ + "" + vbCrLf
+    s$ = s$ + "ualpha                           = [ABCDEFGHIJKLMNOPQRSTUVWXYZ]" + vbCrLf
+    s$ = s$ + "ualpha-space                     = [ABCDEFGHIJKLMNOPQRSTUVWXYZ ]" + vbCrLf
+    s$ = s$ + "ualpha-numeric                   = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]" + vbCrLf
+    s$ = s$ + "ualpha-numeric-space             = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ]" + vbCrLf
+    s$ = s$ + "ualpha-numeric-symbol            = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=]" + vbCrLf
+    s$ = s$ + "ualpha-numeric-symbol-space      = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+= ]" + vbCrLf
+    s$ = s$ + "ualpha-numeric-all               = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/]" + vbCrLf
+    s$ = s$ + "ualpha-numeric-all-space         = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/ ]" + vbCrLf
+    s$ = s$ + "" + vbCrLf
+    s$ = s$ + "lalpha                           = [abcdefghijklmnopqrstuvwxyz]" + vbCrLf
+    s$ = s$ + "lalpha-space                     = [abcdefghijklmnopqrstuvwxyz ]" + vbCrLf
+    s$ = s$ + "lalpha-numeric                   = [abcdefghijklmnopqrstuvwxyz0123456789]" + vbCrLf
+    s$ = s$ + "lalpha-numeric-space             = [abcdefghijklmnopqrstuvwxyz0123456789 ]" + vbCrLf
+    s$ = s$ + "lalpha-numeric-symbol            = [abcdefghijklmnopqrstuvwxyzäöüß0123456789!@#$%^&*()-_+=""]" + vbCrLf
+    s$ = s$ + "lalpha-numeric-symbol-space      = [abcdefghijklmnopqrstuvwxyzäöüß0123456789!@#$%^&*()-_+="" ]" + vbCrLf
+    s$ = s$ + "lalpha-numeric-all               = [abcdefghijklmnopqrstuvwxyzäöüß0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/]" + vbCrLf
+    s$ = s$ + "lalpha-numeric-all-space         = [abcdefghijklmnopqrstuvwxyzäöüß0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/ ]" + vbCrLf
+    s$ = s$ + "" + vbCrLf
+    s$ = s$ + "mixalpha                         = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]" + vbCrLf
+    s$ = s$ + "mixalpha-space                   = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ]" + vbCrLf
+    s$ = s$ + "mixalpha-numeric                 = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]" + vbCrLf
+    s$ = s$ + "mixalpha-numeric-space           = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ]" + vbCrLf
+    s$ = s$ + "mixalpha-numeric-symbol          = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=]" + vbCrLf
+    s$ = s$ + "mixalpha-numeric-symbol-space    = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+= ]" + vbCrLf
+    s$ = s$ + "mixalpha-numeric-all             = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/]" + vbCrLf
+    s$ = s$ + "mixalpha-numeric-all-space       = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/ ]"
+    defaultCharset$ = s$
+End Function
 
 Public Sub Change_Language()
     'does not change status bar information,
@@ -937,9 +986,9 @@ Public Sub Change_Language()
         mnuFileSplit1000000.Caption = "every 1,&000,000"
         mnuFileSplitCustom.Caption = "custom [every " + IIf(mnuFileSplitCustom.Tag = "", "#", mnuFileSplitCustom.Tag) + " words]"
         mnuFileType.Caption = "save &type"
-        mnuFileProfiles.Caption = "p&resets"
-        mnuFileProfilesWeb.Caption = "&web passwords"
-        mnuFilesProfilesWPA.Caption = "w&pa passwords"
+        mnuFileProfiles.Caption = "length p&resets"
+        mnuFileProfilesWeb.Caption = "&web passwords (length 4-12)"
+        mnuFilesProfilesWPA.Caption = "w&pa passwords (length (8-63)"
         mnuFileExit.Caption = "&quit"
         
         '[edit]
@@ -987,8 +1036,8 @@ Public Sub Change_Language()
         '[filter]
         mnuFilterLenMin.Caption = "&minimum length: " + IIf(mnuFilterLenMin.Tag = "0", "[none]", mnuFilterLenMin.Tag)
         mnuFilterLenMax.Caption = "ma&ximum length: " + IIf(mnuFilterLenMax.Tag = "0", "[none]", mnuFilterLenMax.Tag)
-        mnuFilterTextRight.Caption = "text to the &right of [" + IIf(mnuFilterTextRight.Tag = "", "string", mnuFilterTextRight.Tag)
-        mnuFilterTextLeft.Caption = "text to the &left of [" + IIf(mnuFilterTextLeft.Tag = "", "string", mnuFilterTextLeft.Tag)
+        mnuFilterTextRight.Caption = "text to the &right of [" + IIf(mnuFilterTextRight.Tag = "", "string", mnuFilterTextRight.Tag) + "]"
+        mnuFilterTextLeft.Caption = "text to the &left of [" + IIf(mnuFilterTextLeft.Tag = "", "string", mnuFilterTextLeft.Tag) + "]"
         mnuFilterHex.Caption = "&convert ! @ # $ ... to hex"
         mnuFilterForeign.Caption = "include &foreign characters"
         
@@ -1359,155 +1408,74 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
+Public Function defaultLeetSpeak$()
+    Dim s$
+    
+        s$ = "a=a,4,@" + vbCrLf
+    s$ = s$ + "b=b,8" + vbCrLf
+    s$ = s$ + "c=c,(" + vbCrLf
+    s$ = s$ + "d=d" + vbCrLf
+    s$ = s$ + "e=e,3" + vbCrLf
+    s$ = s$ + "f=f" + vbCrLf
+    s$ = s$ + "g=g,9" + vbCrLf
+    s$ = s$ + "h=h,#" + vbCrLf
+    s$ = s$ + "i=i,1,|,!" + vbCrLf
+    s$ = s$ + "j=j" + vbCrLf
+    s$ = s$ + "k=k" + vbCrLf
+    s$ = s$ + "l=l,7,1,|,!" + vbCrLf
+    s$ = s$ + "m=m" + vbCrLf
+    s$ = s$ + "n=n" + vbCrLf
+    s$ = s$ + "o=o,0" + vbCrLf
+    s$ = s$ + "p=p" + vbCrLf
+    s$ = s$ + "q=q" + vbCrLf
+    s$ = s$ + "r=r" + vbCrLf
+    s$ = s$ + "s=s,5,$" + vbCrLf
+    s$ = s$ + "t=t,7,+" + vbCrLf
+    s$ = s$ + "u=u" + vbCrLf
+    s$ = s$ + "v=v" + vbCrLf
+    s$ = s$ + "w=w" + vbCrLf
+    s$ = s$ + "x=x" + vbCrLf
+    s$ = s$ + "y=y" + vbCrLf
+    s$ = s$ + "z=z,2" + vbCrLf
+    
+    defaultLeetSpeak$ = s$
+End Function
+
+Public Sub loadLeetspeak()
+    Dim sarr$(), i&, ch%, s$
+    s$ = regGet("leetspeak")
+    sarr$ = Split(s$, vbCrLf)
+    For i& = 0 To UBound(sarr$())
+        s$ = sarr$(i&)
+        If InStr(s$, "=") <> 0 Then
+            ch% = Asc(LCase(Left(s$, 1)))
+            If ch% >= Asc("a") And ch% <= Asc("z") Then
+                'it's a letter
+                SALPH$(ch% - Asc("a")) = Right(s$, Len(s$) - InStr(s$, "="))
+                SCOUNT%(ch% - Asc("a")) = CountString&(SALPH$(ch% - Asc("a")), ",") + 1
+            End If
+        End If
+    Next i&
+End Sub
+
 Private Sub Form_Load()
     Dim s$, i&, j&, f$, ff%, sarr$(), ch%
     
     B_CHANGE = False
     
     'load leetspeak dictionary
-    f$ = App.Path + IIf(Right(App.Path, 1) = "\", "", "\") + "leetspeak.txt"
-    If Len(Dir(f$)) = 0 Then
-        'crease leetspeak file if it doens't exist
-        ff% = FreeFile
-        Open f$ For Binary Access Write As #ff%
-            Put #ff%, , "a=4,@" + vbCrLf
-            Put #ff%, , "b=" + vbCrLf
-            Put #ff%, , "c=(" + vbCrLf
-            Put #ff%, , "d=" + vbCrLf
-            Put #ff%, , "e=3" + vbCrLf
-            Put #ff%, , "f=" + vbCrLf
-            Put #ff%, , "g=9" + vbCrLf
-            Put #ff%, , "h=#" + vbCrLf
-            Put #ff%, , "i=1,|,!" + vbCrLf
-            Put #ff%, , "j=" + vbCrLf
-            Put #ff%, , "k=" + vbCrLf
-            Put #ff%, , "l=7,1,|,!" + vbCrLf
-            Put #ff%, , "m=" + vbCrLf
-            Put #ff%, , "n=" + vbCrLf
-            Put #ff%, , "o=0" + vbCrLf
-            Put #ff%, , "p=" + vbCrLf
-            Put #ff%, , "q=" + vbCrLf
-            Put #ff%, , "r=" + vbCrLf
-            Put #ff%, , "s=5,$" + vbCrLf
-            Put #ff%, , "t=7,+" + vbCrLf
-            Put #ff%, , "u=" + vbCrLf
-            Put #ff%, , "v=" + vbCrLf
-            Put #ff%, , "w=" + vbCrLf
-            Put #ff%, , "x=" + vbCrLf
-            Put #ff%, , "y=" + vbCrLf
-            Put #ff%, , "z=2" + vbCrLf
-        Close #ff%
-        DoEvents
+    s$ = regGet("leetspeak")
+    If s$ = "" Then
+        s$ = defaultLeetSpeak$()
+        regSet "leetspeak", s$
     End If
     
-    s$ = Space(FileLen(f$))
-    ff% = FreeFile
-    Open f$ For Binary Access Read As #ff%
-        Get #ff%, , s$
-        If InStr(s$, vbCrLf) <> 0 Then
-            sarr$() = Split(s$, vbCrLf)
-        Else
-            sarr$() = Split(s$, Chr(10))
-        End If
-        
-        For i& = 0 To UBound(sarr$())
-            s$ = sarr$(i&)
-            If InStr(s$, "=") <> 0 Then
-                ch% = Asc(LCase(Left(s$, 1)))
-                If ch% >= Asc("a") And ch% <= Asc("z") Then
-                    'it's a letter
-                    SALPH$(ch% - Asc("a")) = Right(s$, Len(s$) - InStr(s$, "="))
-                    SCOUNT%(ch% - Asc("a")) = CountString&(SALPH$(ch% - Asc("a")), ",") + 1
-                End If
-            End If
-        Next i&
-    Close #ff%
+    loadLeetspeak
     
-    'load charset dictionary
-    f$ = App.Path + IIf(Right(App.Path, 1) = "\", "", "\") + "charset.lst"
-    If Len(Dir(f$)) = 0 Then
-        'create new charset
-             s$ = "numeric                          = [0123456789]" + Chr(10)
-        s$ = s$ + "numeric-space                    = [0123456789 ]" + Chr(10)
-        s$ = s$ + Chr(10)
-        s$ = s$ + "ualpha                           = [ABCDEFGHIJKLMNOPQRSTUVWXYZ]" + Chr(10)
-        s$ = s$ + "ualpha-space                     = [ABCDEFGHIJKLMNOPQRSTUVWXYZ ]" + Chr(10)
-        s$ = s$ + "ualpha-numeric                   = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]" + Chr(10)
-        s$ = s$ + "ualpha-numeric-space             = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ]" + Chr(10)
-        s$ = s$ + "ualpha-numeric-symbol14          = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=]" + Chr(10)
-        s$ = s$ + "ualpha-numeric-symbol14-space    = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+= ]" + Chr(10)
-        s$ = s$ + "ualpha-numeric-all               = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/]" + Chr(10)
-        s$ = s$ + "ualpha-numeric-all-space         = [ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/ ]" + Chr(10)
-        s$ = s$ + Chr(10)
-        s$ = s$ + "lalpha                           = [abcdefghijklmnopqrstuvwxyz]" + Chr(10)
-        s$ = s$ + "lalpha-space                     = [abcdefghijklmnopqrstuvwxyz ]" + Chr(10)
-        s$ = s$ + "lalpha-numeric                   = [abcdefghijklmnopqrstuvwxyz0123456789]" + Chr(10)
-        s$ = s$ + "lalpha-numeric-space             = [abcdefghijklmnopqrstuvwxyz0123456789 ]" + Chr(10)
-        s$ = s$ + "lalpha-numeric-symbol14          = [abcdefghijklmnopqrstuvwxyzäöüß0123456789!@#$%^&*()-_+=""]" + Chr(10)
-        s$ = s$ + "lalpha-numeric-symbol14-space    = [abcdefghijklmnopqrstuvwxyzäöüß0123456789!@#$%^&*()-_+="" ]" + Chr(10)
-        s$ = s$ + "lalpha-numeric-all               = [abcdefghijklmnopqrstuvwxyzäöüß0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/]" + Chr(10)
-        s$ = s$ + "lalpha-numeric-all-space         = [abcdefghijklmnopqrstuvwxyzäöüß0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/ ]" + Chr(10)
-        s$ = s$ + Chr(10)
-        s$ = s$ + "mixalpha                         = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]" + Chr(10)
-        s$ = s$ + "mixalpha-space                   = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ]" + Chr(10)
-        s$ = s$ + "mixalpha-numeric                 = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]" + Chr(10)
-        s$ = s$ + "mixalpha-numeric-space           = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ]" + Chr(10)
-        s$ = s$ + "mixalpha-numeric-symbol14        = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=]" + Chr(10)
-        s$ = s$ + "mixalpha-numeric-symbol14-space  = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+= ]" + Chr(10)
-        s$ = s$ + "mixalpha-numeric-all             = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/]" + Chr(10)
-        s$ = s$ + "mixalpha-numeric-all-space       = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=~`[]{}|\:;""'<>,.?/ ]" + Chr(10)
-        
-        If mnuFileTypeUnix.Checked = False Then
-            s$ = Replace(s$, Chr(10), vbCrLf)
-        End If
-        
-        ff% = FreeFile
-        Open f$ For Binary Access Write As #ff%
-            Put #ff%, , s$
-        Close #ff%
-        DoEvents
+    If regGet("charset") = "" Then
+        regSet "charset", defaultCharset()
     End If
-    
-    'load charset.lst into menu
-    s$ = Space(FileLen(f$))
-    ff% = FreeFile
-    Open f$ For Binary Access Read As #ff%
-        Get #ff%, , s$
-    Close #ff%
-    If Trim(s$) <> "" Then
-        If InStr(s$, vbCrLf) <> 0 Then
-            sarr$() = Split(s$, vbCrLf)
-        Else
-            sarr$() = Split(s$, Chr(10))
-        End If
-        j& = 0
-        For i& = 0 To UBound(sarr$())
-            s$ = sarr$(i&)
-            If Left(s$, 1) <> "#" And InStr(s$, "[") <> 0 And InStr(s$, "]") <> 0 And InStr(s$, "=") <> 0 Then
-                'isn't commented out by #, contains [ ] and =
-                
-                If Mid(s$, InStr(s$, "[") + 1, InStr(s$, "]") - InStr(s$, "[") - 1) <> "" Then
-                    If j& <> 0 Then
-                        Load mnuGenStringX(j&)
-                    End If
-                    With mnuGenStringX(j&)
-                        .Caption = Trim(Left(s$, InStr(s$, "=") - 1))
-                        .Tag = Mid(s$, InStr(s$, "[") + 1, InStr(s$, "]") - InStr(s$, "[") - 1)
-                    End With
-                End If
-                j& = j& + 1
-            ElseIf s$ = "" And i& <> UBound(sarr$()) Then
-                If s$ = "" Then
-                    If j& <> 0 Then
-                        Load mnuGenStringX(j&)
-                    End If
-                    mnuGenStringX(j&).Caption = "-"
-                    mnuGenStringX(j&).Tag = ""
-                    j& = j& + 1
-                End If
-            End If
-        Next i&
-    End If
+    loadCharsets
     
     'load file split pref's
     s$ = regGet("split")
@@ -1700,8 +1668,13 @@ Private Sub Form_Load()
         regSet "resume", ""
         regSet "resume_index", ""
         
-        mnuGenStringX_Click x
+        If frmMsg.MsgBocks("L517 has saved your position in the last list you were generating (" + Me.mnuGenStringX(x).Tag + ")." + vbCrLf + vbCrLf + "Do you want to resume generating this list?", vbQuestion + vbYesNo, "L517") = vbYes Then
+            mnuGenStringX_Click x
+        Else
+            RESUME_STRING$ = ""
+        End If
     End If
+    
 End Sub
 
 Private Sub Form_LostFocus()
@@ -1767,6 +1740,12 @@ Private Sub Form_Unload(Cancel As Integer)
     DoEvents
     
     lst.ListItems().Clear
+    
+    s$ = App.Path
+    If Right(s$, 1) <> "\" Then s$ = s$ + "\"
+    
+    On Error Resume Next
+    Kill s$ + "readme.txt"
     
     End
 End Sub
@@ -2057,35 +2036,153 @@ Private Sub lst_OLEDragDrop(Data As MSComctlLib.DataObject, Effect As Long, Butt
     End If
 End Sub
 
+Private Sub mnuCaseLeetEdit_Click()
+    frmLeetspeak.Show vbModal, Me
+    loadLeetspeak
+End Sub
+
+Private Sub mnuGenPhoneCustom_Click()
+    Dim s$, count&, ff%, i&, imax&, sresult$, j&, current&, char$, snum$
+    
+    s$ = frmMsg.InputBocks("Enter custom number string to generate, with X's where you want numbers to go:" + vbCrLf + vbCrLf + "ex: 555-5XX-XXXX")
+    If s$ = "" Then Exit Sub
+    s$ = UCase(s$)
+    
+    count& = 0
+    For i& = 1 To Len(s$)
+        If Mid(s$, i&, 1) = "X" Then
+            count& = count& + 1
+        End If
+    Next i&
+    
+    lst.ListItems().Clear
+    lst.Visible = False
+    lblCancel.Visible = True
+    DoEvents
+    
+    stat "generating phone numbers..."
+    ff% = FreeFile%
+    Open App.Path + IIf(Right(App.Path, 1) = "\", "", "\") + s$ + ".txt" For Binary Access Write As #ff%
+        
+        imax& = 10 ^ count&
+        ' loop through every number
+        For i& = 0 To imax& - 1
+            If i Mod 2500 = 0 Then
+                DoEvents
+                prog CDbl(i& + 1) / CDbl(imax&)
+                If lblCancel.Visible = False Then
+                    MsgBox "CANCELLED WTF"
+                    GoTo cancelled
+                End If
+            End If
+            snum$ = CStr(i&)
+            ' add buffer of 0's to set correct length
+            Do While Len(snum$) < count&
+                snum$ = "0" + snum$
+            Loop
+            
+            'build the current number
+            sresult$ = ""
+            current& = 0
+            For j& = 1 To Len(s$) ' loop through entire custom string
+                char$ = Mid(s$, j&, 1)
+                If char$ = "X" Then ' if we're at an X, insert the current number we're at
+                    current& = current& + 1
+                    sresult$ = sresult$ + Mid(snum$, current&, 1)
+                Else
+                    sresult$ = sresult$ + char$ ' if we're not at an X, it's part of the custom string
+                End If
+            Next j&
+            Put #ff%, , CStr(sresult$ + IIf(mnuFileTypeUnix.Checked, Chr(10), vbCrLf))
+            'lst.ListItems().Add , , sresult$ 'add it to the list
+        Next i&
+cancelled:
+        If i& = 0 Then i& = imax&
+        lblCancel.Visible = False
+        prog 0
+    Close #ff%
+    
+    lst.Visible = True
+    stat "#'s saved to '" + s$ + ".txt'"
+End Sub
+
+Private Sub mnuGenStringEdit_Click()
+    frmCharset.Show vbModal, Me
+    
+    loadCharsets
+End Sub
+
+Private Sub loadCharsets()
+    Dim s$, i&, j&, sarr$()
+    
+    For i& = 1 To mnuGenStringX.UBound
+        Unload mnuGenStringX(i&)
+    Next i&
+    
+    s$ = regGet("charset")
+    sarr$() = Split(s$, vbCrLf)
+    j& = 0
+    For i& = 0 To UBound(sarr$())
+        s$ = sarr$(i&)
+        If Left(s$, 1) <> "#" And InStr(s$, "[") <> 0 And InStr(s$, "]") <> 0 And InStr(s$, "=") <> 0 Then
+            'isn't commented out by #, contains [ ] and =
+            
+            'If Mid(s$, InStr(s$, "[") + 1, InStr(s$, "]") - InStr(s$, "[") - 1) <> "" Then
+            If Mid(s$, InStr(s$, "[") + 1, Len(s$) - InStr(s$, "[") - 1) <> "" Then
+                If j& <> 0 Then
+                    Load mnuGenStringX(j&)
+                End If
+                With mnuGenStringX(j&)
+                    .Caption = Trim(Left(s$, InStr(s$, "=") - 1))
+                    .Tag = Mid(s$, InStr(s$, "[") + 1, Len(s$) - InStr(s$, "[") - 1)
+                End With
+            End If
+            j& = j& + 1
+        ElseIf s$ = "" And i& <> UBound(sarr$()) Then
+            If s$ = "" Then
+                If j& <> 0 Then
+                    Load mnuGenStringX(j&)
+                End If
+                mnuGenStringX(j&).Caption = "-"
+                mnuGenStringX(j&).Tag = ""
+                j& = j& + 1
+            End If
+        End If
+    Next i&
+End Sub
+
 Private Sub mnuHelpAbout_Click()
-    Dim s$
+    Dim s$, version$, day$
+    
+    version$ = "0.96"
+    day$ = "19jan2011"
     
     Select Case LANGUAGE$
     Case "english"
         s$ = "os:" + vbTab + vbTab + "windows 98/xp/vista/seven" + vbCrLf
-        s$ = s$ + "version:" + vbTab + vbTab + "0.9" + vbCrLf
-        s$ = s$ + "compiled:" + vbTab + vbTab + "6jan10" + vbCrLf
+        s$ = s$ + "version:" + vbTab + vbTab + version$ + vbCrLf
+        s$ = s$ + "compiled:" + vbTab + vbTab + day$ + vbCrLf
         s$ = s$ + "author:" + vbTab + vbTab + "derv" + vbCrLf
         s$ = s$ + "" + vbCrLf
         s$ = s$ + "may this program guide you in building the perfect wordlist." + vbCrLf
     Case "french"
         s$ = "Système d'exploitation:" + vbTab + vbTab + "Windows 98/xp/vista/seven" + vbCrLf
-        s$ = s$ + "version:" + vbTab + vbTab + "0.9" + vbCrLf
-        s$ = s$ + "compilé:" + vbTab + vbTab + "6jan10" + vbCrLf
+        s$ = s$ + "version:" + vbTab + vbTab + version$ + vbCrLf
+        s$ = s$ + "compilé:" + vbTab + vbTab + day$ + vbCrLf
         s$ = s$ + "Auteur:" + vbTab + vbTab + "derv" + vbCrLf
         s$ = s$ + "" + vbCrLf
         s$ = s$ + "mai ce programme vous guide dans la construction du dictionnaire parfait." + vbCrLf
     Case "german"
         s$ = "Betriebssystem:" + vbTab + vbTab + "windows 98/xp/vista/seven" + vbCrLf
-        s$ = s$ + "version:" + vbTab + vbTab + "0.9" + vbCrLf
-        s$ = s$ + "zusammengestellt:" + vbTab + vbTab + "6jan10" + vbCrLf
+        s$ = s$ + "version:" + vbTab + vbTab + version$ + vbCrLf
+        s$ = s$ + "zusammengestellt:" + vbTab + vbTab + day$ + vbCrLf
         s$ = s$ + "Autor:" + vbTab + vbTab + "derv" + vbCrLf
         s$ = s$ + "" + vbCrLf
         s$ = s$ + "dieses Programm führt Sie beim Aufbau der perfekte Wortliste." + vbCrLf
     Case "spanish"
         s$ = "sistema operativo:" + vbTab + vbTab + "windows 98/xp/vista/seven" + vbCrLf
-        s$ = s$ + "versión:" + vbTab + vbTab + "0.9" + vbCrLf
-        s$ = s$ + "compilado:" + vbTab + vbTab + "6jan10" + vbCrLf
+        s$ = s$ + "versión:" + vbTab + vbTab + version$ + vbCrLf
+        s$ = s$ + "compilado:" + vbTab + vbTab + day$ + vbCrLf
         s$ = s$ + "autor:" + vbTab + vbTab + "derv" + vbCrLf
         s$ = s$ + "" + vbCrLf
         s$ = s$ + "de este programa puede guiarlo en la construcción de la lista de palabras perfecto." + vbCrLf
@@ -2237,7 +2334,10 @@ Private Sub mnuAppendPostDefault_Click()
     lst.Visible = False
     DoEvents
     For i& = 0 To UBound(sarr$())
-        If i Mod 100 = 0 Then DoEvents
+        If i Mod 100 = 0 Then
+            DoEvents
+            prog (i& + 1) / UBound(sarr$())
+        End If
         For j& = 0 To UBound(sadd$())
             s$ = sarr$(i&) + sadd$(j&)
             If FilterCheck(s$) = True Then
@@ -2617,8 +2717,10 @@ Private Sub mnuFileNew_Click()
     
     If lst.ListItems().count > 0 Then
         lst.ListItems().Clear
+        UpdateCaption
     End If
     
+    stat "inactive"
 End Sub
 
 Private Sub mnuFileOpen_Click()
@@ -2917,12 +3019,12 @@ End Sub
 Private Sub mnuFilterLenMin_Click()
     Dim s$, change%, sl$
     
-    change% = CInt(mnuFilterLenMax.Tag)
+    change% = CInt(mnuFilterLenMin.Tag)
     
     Select Case LANGUAGE$
     Case "english"
-        sl$ = "enter maximum length for an item in the list:" + vbCrLf + vbCrLf + _
-              "0 for no maximum."
+        sl$ = "enter minimum length for an item in the list:" + vbCrLf + vbCrLf + _
+              "0 for no minimum."
     Case "french"
         sl$ = "Entrez durée minimum d'un élément dans la liste:" + vbCrLf + vbCrLf + _
               "0 pour pas de minimum."
@@ -3054,29 +3156,29 @@ End Sub
 Public Sub HeapSort1(ByRef pvarArray As Variant)
     'sorts array alphabetically, very quickly!
     'used in the analyzer
-    Dim i&, iMin&, iMax&, varSwap As Variant
+    Dim i&, iMin&, imax&, varSwap As Variant
    
     iMin = LBound(pvarArray)
-    iMax = UBound(pvarArray)
-    For i = (iMax + iMin) \ 2 To iMin Step -1
-        Heap1 pvarArray, i, iMin, iMax
+    imax = UBound(pvarArray)
+    For i = (imax + iMin) \ 2 To iMin Step -1
+        Heap1 pvarArray, i, iMin, imax
     Next i
-    For i = iMax To iMin + 1 Step -1
+    For i = imax To iMin + 1 Step -1
         varSwap = pvarArray(i)
         pvarArray(i) = pvarArray(iMin)
         pvarArray(iMin) = varSwap
         Heap1 pvarArray, iMin, iMin, i - 1
     Next i
 End Sub
-Private Sub Heap1(ByRef pvarArray As Variant, ByVal i As Long, iMin As Long, iMax As Long)
+Private Sub Heap1(ByRef pvarArray As Variant, ByVal i As Long, iMin As Long, imax As Long)
     'used in heap sort
     Dim lngLeaf&, varSwap As Variant
     
     Do
         lngLeaf = i + i - (iMin - 1)
         Select Case lngLeaf
-            Case Is > iMax: Exit Do
-            Case Is < iMax: If pvarArray(lngLeaf + 1) > pvarArray(lngLeaf) Then lngLeaf = lngLeaf + 1
+            Case Is > imax: Exit Do
+            Case Is < imax: If pvarArray(lngLeaf + 1) > pvarArray(lngLeaf) Then lngLeaf = lngLeaf + 1
         End Select
         If pvarArray(i) > pvarArray(lngLeaf) Then Exit Do
         varSwap = pvarArray(i)
@@ -3464,13 +3566,13 @@ Private Sub mnuGenAnalMinPre_Click()
     If LANGUAGE$ <> "english" Then Change_Language
 End Sub
 
-Private Sub mnuGenDate_Click(index As Integer)
+Private Sub mnuGenDate_Click(Index As Integer)
     Dim sstart$, sstop$, ista%, isto%, id%, im%, iy%
     Dim sd$, sm$, sy$, sdate$, count&, sl$
     
     Select Case LANGUAGE$
     Case "english"
-        sl$ = "enter the starting two-digit year:"
+        sl$ = "enter the STARTING two-digit year:"
     Case "french"
         sl$ = "Entrez le point de départ année à deux chiffres:"
     Case "german"
@@ -3485,7 +3587,7 @@ Private Sub mnuGenDate_Click(index As Integer)
     
     Select Case LANGUAGE$
     Case "english"
-        sl$ = "enter the starting two-digit year:"
+        sl$ = "enter the ENDING two-digit year:"
     Case "french"
         sl$ = "Entrez la fin année à deux chiffres:"
     Case "german"
@@ -3522,7 +3624,7 @@ Private Sub mnuGenDate_Click(index As Integer)
     
     For iy% = ista% To isto%
         sy$ = CStr(iy%)
-        If index% Mod 2 = 0 Then sy$ = Right(sy$, 2)
+        If Index% Mod 2 = 0 Then sy$ = Right(sy$, 2)
         
         DoEvents
         If lblCancel.Visible = False Then
@@ -3538,7 +3640,7 @@ Private Sub mnuGenDate_Click(index As Integer)
         
         For im% = 1 To 12
             sm$ = CStr(im%)
-            If index% >= 4 Then
+            If Index% >= 4 Then
                 sm$ = NumToMonth$(im%)
             Else
                 If Len(sm$) = 1 Then sm$ = "0" + sm$
@@ -3559,7 +3661,7 @@ Private Sub mnuGenDate_Click(index As Integer)
                     End If
                 End Select
                 
-                Select Case index%
+                Select Case Index%
                 Case 0, 1, 4, 5
                     sdate$ = sm$ + sd$ + sy$
                 Case 2, 3, 6, 7
@@ -3795,7 +3897,7 @@ Private Sub mnuGenPhoneArea_Click()
     Loop
     
     lst.Visible = False
-    
+    scity$ = scity$ + "(area)"
     stat "saving to '" + scity$ + ".txt'"
     prog 0.001
     DoEvents
@@ -4044,8 +4146,9 @@ Private Sub mnuGenStringHelp_Click()
     End If
 End Sub
 
-Private Sub mnuGenStringX_Click(index As Integer)
+Private Sub mnuGenStringX_Click(Index As Integer)
     Dim a$, ff%, f$, slen$, lword&(), i&, j&, s$, per_ttl#, per_cur#, isplit&, icount&, timah#, xtemp#, sl$
+    Dim sarr$()
     
     icount& = 0
     isplit& = 0
@@ -4081,6 +4184,8 @@ Private Sub mnuGenStringX_Click(index As Integer)
         timah# = CDbl(s$)
     End If
     
+    a$ = mnuGenStringX(Index).Tag
+    
     If RESUME_STRING$ = "" Then
         Select Case LANGUAGE$
         Case "english"
@@ -4092,12 +4197,13 @@ Private Sub mnuGenStringX_Click(index As Integer)
         Case "spanish"
             sl$ = "entrar en el (numérico) de longitud de la cadena que desea generar en el conjunto de caracteres:"
         End Select
-        slen$ = frmMsg.InputBocks(sl$ + " '" + mnuGenStringX(index).Caption + "':")
+        slen$ = frmMsg.InputBocks(sl$ + " '" + mnuGenStringX(Index).Caption + "':")
         If slen$ = "" Or IsNumeric(slen$) = False Then Exit Sub
         
         per_ttl# = CDbl(Len(a$) ^ CDbl(slen$))
+        
         xtemp# = per_ttl# * (CLng(slen$) + IIf(frmMain.mnuFileTypeUnix.Checked, 1, 2))
-    
+        
         
         ReDim lword&(CLng(slen$) - 1)
         For i& = 0 To UBound(lword&())
@@ -4109,60 +4215,66 @@ Private Sub mnuGenStringX_Click(index As Integer)
                  s$ = "character set: " + vbTab + a$ + vbCrLf
             s$ = s$ + "estimated size: " + vbTab + BytesToString$(xtemp#) + vbCrLf
             s$ = s$ + "estimated time: " + vbTab + CalcETA(xtemp#, timah#) + vbCrLf
-            s$ = s$ + "filename: " + vbTab + vbTab + "'" + slen$ + "-" + mnuGenStringX(index).Caption + ".txt'" + vbCrLf + vbCrLf
+            s$ = s$ + "filename: " + vbTab + vbTab + "'" + slen$ + "-" + mnuGenStringX(Index).Caption + ".txt'" + vbCrLf + vbCrLf
             s$ = s$ + "do you want to generate this list?"
         Case "french"
                  s$ = "ensemble de lettres: " + vbTab + a$ + vbCrLf
             s$ = s$ + "estimé l'espace disque dur: " + vbTab + BytesToString$(xtemp#) + vbCrLf
             s$ = s$ + "Estimation du temps restant: " + vbTab + CalcETA(xtemp#, timah#) + vbCrLf
-            s$ = s$ + "le nom du fichier: " + vbTab + vbTab + "'" + slen$ + "-" + mnuGenStringX(index).Caption + ".txt'" + vbCrLf + vbCrLf
+            s$ = s$ + "le nom du fichier: " + vbTab + vbTab + "'" + slen$ + "-" + mnuGenStringX(Index).Caption + ".txt'" + vbCrLf + vbCrLf
             s$ = s$ + "Voulez-vous générer cette liste?"
         Case "german"
                  s$ = "Reihe von Briefen: " + vbTab + a$ + vbCrLf
             s$ = s$ + "geschätzten Platz auf der Festplatte: " + vbTab + BytesToString$(xtemp#) + vbCrLf
             s$ = s$ + "Geschätzte verbleibende Zeit: " + vbTab + CalcETA(xtemp#, timah#) + vbCrLf
-            s$ = s$ + "Dateinamen: " + vbTab + vbTab + "'" + slen$ + "-" + mnuGenStringX(index).Caption + ".txt'" + vbCrLf + vbCrLf
+            s$ = s$ + "Dateinamen: " + vbTab + vbTab + "'" + slen$ + "-" + mnuGenStringX(Index).Caption + ".txt'" + vbCrLf + vbCrLf
             s$ = s$ + "wollen Sie diese Liste zu generieren?"
         Case "spanish"
                  s$ = "conjunto de cartas: " + vbTab + a$ + vbCrLf
             s$ = s$ + "Estimación del espacio de disco duro: " + vbTab + BytesToString$(xtemp#) + vbCrLf
             s$ = s$ + "tiempo restante estimado: " + vbTab + CalcETA(xtemp#, timah#) + vbCrLf
-            s$ = s$ + "el nombre de archivo: " + vbTab + vbTab + "'" + slen$ + "-" + mnuGenStringX(index).Caption + ".txt'" + vbCrLf + vbCrLf
+            s$ = s$ + "el nombre de archivo: " + vbTab + vbTab + "'" + slen$ + "-" + mnuGenStringX(Index).Caption + ".txt'" + vbCrLf + vbCrLf
             s$ = s$ + "¿quieres generar esta lista?"
         End Select
         
         If frmMsg.MsgBocks(s$, vbQuestion + vbYesNo) = vbNo Then Exit Sub
         
         per_cur# = 1
-        f$ = App.Path + IIf(Right(App.Path, 1) = "\", "", "\") + slen$ + "-" + mnuGenStringX(index).Caption + ".txt"
+        f$ = App.Path + IIf(Right(App.Path, 1) = "\", "", "\") + slen$ + "-" + mnuGenStringX(Index).Caption + ".txt"
         Do While Len(Dir(f$)) <> 0
             Kill f$
             DoEvents
         Loop
         
     Else
-        slen$ = Len(RESUME_STRING$)
-        ReDim lword&(CLng(slen$) - 1)
+        ' resume from previous list generation
+        sarr$() = Split(RESUME_STRING$, ",")
+        slen$ = CStr(CLng(UBound(sarr$()) + 1))
+        ReDim lword&(UBound(sarr$()))
         For i& = 0 To UBound(lword&())
-            lword&(i&) = Mid(RESUME_STRING$, i&, 1)
+            lword&(i&) = CLng(sarr$(i&))
         Next i&
         
         per_ttl# = CDbl(Len(a$) ^ CDbl(slen$))
         xtemp# = per_ttl# * (CLng(slen$) + IIf(frmMain.mnuFileTypeUnix.Checked, 1, 2))
         
-        per_cur# = 1
-        f$ = App.Path + IIf(Right(App.Path, 1) = "\", "", "\") + slen$ + "-" + mnuGenStringX(index).Caption + ".txt"
+        If IsNumeric(regGet("resume_percent")) Then
+            per_cur# = CDbl(regGet("resume_percent"))
+        Else
+            per_cur# = 1
+        End If
+        
+        f$ = App.Path + IIf(Right(App.Path, 1) = "\", "", "\") + slen$ + "-" + mnuGenStringX(Index).Caption + ".txt"
         Do While Len(Dir(f$)) <> 0
             DoEvents
             f$ = NextFile$(f$)
         Loop
     End If
     
-    a$ = mnuGenStringX(index).Tag
-    
     stat "generating file..."
     prog 0.001
     lst.Visible = False
+    lblCancel.Visible = True
     DoEvents
     
     ff% = FreeFile
@@ -4173,7 +4285,7 @@ Private Sub mnuGenStringX_Click(index As Integer)
                 If lblCancel.Visible = False Then
                     'cancel was clicked
                     per_ttl# = -1
-                    GoTo Cancelled
+                    GoTo cancelled
                 End If
                 prog per_cur# / per_ttl#
             End If
@@ -4219,15 +4331,17 @@ Private Sub mnuGenStringX_Click(index As Integer)
                 End If
             Next i&
         Loop Until i& <> -1
-Cancelled:
-    If lblCancel.Visible = True Then
-        If MsgBox("You have chosen to cancel this string generation.  Do you want to save your progress and start from the same point next time you load L517?", vbQuestion + vbYesNo, "L517") = vbYes Then
+cancelled:
+    If lblCancel.Visible = False Then
+        If frmMsg.MsgBocks("Do you want to save your progress and start from the same point next time you load L517?" + vbCrLf + vbCrLf + "L517 can resume wordlist generation at a later time.  By selecting 'Yes', L517 will ask if you want to resume generating this list the next time the program is launched.", vbQuestion + vbYesNo, "L517") = vbYes Then
             s$ = ""
             For i = 0 To UBound(lword())
-                s$ = s$ + CStr(lword(i))
+                s$ = s$ + CStr(lword(i)) + ","
             Next i
+            s$ = Left(s$, Len(s$) - 1)
             regSet "resume", s$
-            regSet "resume_index", CStr(index)
+            regSet "resume_index", CStr(Index)
+            regSet "resume_percent", CStr(per_cur#)
         End If
     End If
     Close #ff%
@@ -4274,7 +4388,10 @@ Cancelled:
 End Sub
 
 Private Sub mnuGenWeb_Click()
-    Dim sdata$, s$, sl$
+    frmWeb.Show vbModal, Me
+    
+    Exit Sub
+    Dim sdata$, s$, sl$, lbefore&, lafter&
     
     s$ = frmMsg.InputBocks("enter the url or web address of the site you want to grab words from:" + vbCrLf + vbCrLf + "i.e. http://www.myspace.com/tilatequila", "L517", regGet("last_url"))
     If s$ = "" Then Exit Sub
@@ -4285,7 +4402,14 @@ Private Sub mnuGenWeb_Click()
     DoEvents
     
     sdata$ = webgetsource$(s$)
-    ParseWebData sdata$
+    If sdata$ <> "" Then
+        lbefore& = lst.ListItems().count
+        ParseWebData sdata$
+        lafter& = lst.ListItems().count
+        stat "loaded site; " + CStr(lafter& - lbefore&) + " items found"
+    Else
+        stat "unable to load site data"
+    End If
     
     B_CHANGE = True
     UpdateCaption
@@ -4389,10 +4513,11 @@ Private Sub mnuHelpHelp_Click()
         s$ = s$ + "" + vbTab + "" + vbTab + " with unix [and some windows] applications" + vbCrLf
         s$ = s$ + "" + vbCrLf
         s$ = s$ + ">presets>" + vbCrLf
-        s$ = s$ + "" + vbTab + ">wpa " + vbTab + " sets the proper minimum/maximum length " + vbCrLf
-        s$ = s$ + "" + vbTab + "" + vbTab + " for wpa passwords (8-64)" + vbCrLf
-        s$ = s$ + "" + vbTab + ">web " + vbTab + " sets proper min/max length for web-based" + vbCrLf
-        s$ = s$ + "" + vbTab + "" + vbTab + " passwords (4-12) + vbCrLf" + vbCrLf
+        s$ = s$ + "" + vbCrLf + "[note: these presets change the *filter length* for passwords]" + vbCrLf
+        s$ = s$ + "" + vbTab + ">wpa " + vbTab + " sets minimum/maximum length for  " + vbCrLf
+        s$ = s$ + "" + vbTab + "" + vbTab + " wpa passwords (8-64)" + vbCrLf
+        s$ = s$ + "" + vbTab + ">web " + vbTab + " minimum/maximum length for " + vbCrLf
+        s$ = s$ + "" + vbTab + "" + vbTab + " web-based passwords (4-12) + vbCrLf" + vbCrLf
         s$ = s$ + "" + vbCrLf
         s$ = s$ + ">exit" + vbTab + "" + vbTab + " quits." + vbCrLf
         s$ = s$ + "" + vbCrLf
@@ -5237,19 +5362,19 @@ Private Sub mnuHelpHelp_Click()
     Shell "explorer " + Chr(34) + readme$ + Chr(34), vbNormalFocus
     DoEvents
     
-    timah# = Timer
-    Do While Timer - timah# < 2
-        DoEvents
-    Loop
+    'timah# = Timer
+    'Do While Timer - timah# < 2
+    '    DoEvents
+    'Loop
     
-    timah# = Timer
-    Do While Timer - timah# < 5
-        DoEvents
-        If Len(Dir(readme$)) <> 0 Then
-            Kill readme$
-            Exit Do
-        End If
-    Loop
+    'timah# = Timer
+    'Do While Timer - timah# < 5
+    '    DoEvents
+    '    If Len(Dir(readme$)) <> 0 Then
+    '        Kill readme$
+    '        Exit Do
+    '    End If
+    'Loop
 End Sub
 
 Private Sub mnuHelpItems_Click()
@@ -5428,7 +5553,8 @@ Private Sub mnuListRemove_Click()
     On Error GoTo Err_Occ
     
     'If lst.SelectedItem.Selected = True Then
-        lst.ListItems().Remove lst.SelectedItem.index
+        lst.ListItems().Remove lst.SelectedItem.Index
+        UpdateCaption
     'End If
 Err_Occ:
 End Sub
