@@ -585,7 +585,7 @@ Public Function ParseWebData&(sDat$)
                 stxt$ = stxt$ + schar$
             ElseIf stxt$ <> "" Then
                 If FilterCheck(stxt$) = True Then
-                    frmMain.lst.ListItems().Add , , stxt$
+                    frmMain.lst.ListItems().add , , stxt$
                     count& = count& + 1
                 End If
                 stxt$ = ""
@@ -594,10 +594,11 @@ Public Function ParseWebData&(sDat$)
     Next i&
     
     If stxt$ <> "" And FilterCheck(stxt$) = True Then
-        frmMain.lst.ListItems().Add , , stxt$
+        frmMain.lst.ListItems().add , , stxt$
         count& = count& + 1
     End If
     
+    UpdateCaption
     ParseWebData& = count&
 End Function
 Public Function CaseFirst$(txt$)
@@ -810,7 +811,7 @@ Public Sub ParseTextBlock(stxt$)
         Else
             sword$ = Trim(sword$)
             If sword$ <> "" And FilterCheck(sword$) = True Then
-                frmMain.lst.ListItems().Add , , sword$
+                frmMain.lst.ListItems().add , , sword$
             End If
             sword$ = ""
         End If
@@ -818,7 +819,7 @@ Public Sub ParseTextBlock(stxt$)
     
     sword$ = Trim(sword$)
     If sword$ <> "" And FilterCheck(sword$) = True Then
-        frmMain.lst.ListItems().Add , , sword$
+        frmMain.lst.ListItems().add , , sword$
     End If
 End Sub
 Public Sub SaveList(sfile$)
@@ -826,6 +827,7 @@ Public Sub SaveList(sfile$)
     'handles split files and all the different cases.
     
     Dim ff%, i&, s$, b_first!, b_leet!, b_everyother!, lcount#, isplit&, icount&, stemp$
+    Dim lastitem$, skipped$
     
     icount& = 1
     isplit& = 0
@@ -854,56 +856,61 @@ Public Sub SaveList(sfile$)
                 prog i& / lcount#
             End If
             
-            If isplit& > 0 Then
-                If icount& >= isplit& Then
-                    DoEvents
-                    icount& = 0
-                    'close old file
-                    Close #ff%
-                    'find next file name in sequence
-                    sfile$ = NextFile$(sfile$)
-                    'open new file
-                    ff% = FreeFile
-                    Open sfile$ For Binary Access Write As #ff%
-                    DoEvents
+            If lastitem$ <> frmMain.lst.ListItems(i&).Text Then
+                If isplit& > 0 Then
+                    If icount& >= isplit& Then
+                        DoEvents
+                        icount& = 0
+                        'close old file
+                        Close #ff%
+                        'find next file name in sequence
+                        sfile$ = NextFile$(sfile$)
+                        'open new file
+                        ff% = FreeFile
+                        Open sfile$ For Binary Access Write As #ff%
+                        DoEvents
+                    End If
                 End If
-            End If
-            
-            'save the item
-            Put #ff%, , CStr(frmMain.lst.ListItems(i&).Text + IIf(frmMain.mnuFileTypeWin.Checked, vbCrLf, Chr(10)))
-            
-            icount& = icount& + 1
-            
-            s$ = frmMain.lst.ListItems(i&).Text
-            If b_first = True And s$ <> CaseFirst$(s$) Then
-                'if first letter uppercase is true and it's not gonna be a dupe..
-                Put #ff%, , CStr(CaseFirst$(frmMain.lst.ListItems(i&).Text) + IIf(frmMain.mnuFileTypeWin.Checked, vbCrLf, Chr(10)))
+                
+                'save the item
+                Put #ff%, , CStr(frmMain.lst.ListItems(i&).Text + IIf(frmMain.mnuFileTypeWin.Checked, vbCrLf, Chr(10)))
+                
                 icount& = icount& + 1
-            End If
-            
-            If b_everyother = True And s$ <> CaseEveryOther(s$) Then
-                If b_first = True And CaseFirst(s$) <> CaseEveryOther$(s$) Or b_first = False Then
-                    'if every other letter upper is true and it's nto gonna be a dupe..
-                    Put #ff%, , CStr(CaseEveryOther$(frmMain.lst.ListItems(i&).Text) + IIf(frmMain.mnuFileTypeWin.Checked, vbCrLf, Chr(10)))
+                
+                s$ = frmMain.lst.ListItems(i&).Text
+                If b_first = True And s$ <> CaseFirst$(s$) Then
+                    'if first letter uppercase is true and it's not gonna be a dupe..
+                    Put #ff%, , CStr(CaseFirst$(frmMain.lst.ListItems(i&).Text) + IIf(frmMain.mnuFileTypeWin.Checked, vbCrLf, Chr(10)))
                     icount& = icount& + 1
                 End If
-            End If
-            
-            If b_leet = True Then
-                stemp$ = CaseLeet$(frmMain.lst.ListItems(i&).Text)
-                If b_first = True And CaseFirst(s$) <> stemp$ Or b_first = False Then
-                    If b_everyother = True And CaseEveryOther(s$) <> stemp$ Or b_everyother = False Then
-                        If s$ <> stemp$ Then
-                            Put #ff%, , CStr(CStr(stemp$) + IIf(frmMain.mnuFileTypeWin.Checked, vbCrLf, Chr(10)))
-                            icount& = icount& + 1
+                
+                If b_everyother = True And s$ <> CaseEveryOther(s$) Then
+                    If b_first = True And CaseFirst(s$) <> CaseEveryOther$(s$) Or b_first = False Then
+                        'if every other letter upper is true and it's nto gonna be a dupe..
+                        Put #ff%, , CStr(CaseEveryOther$(frmMain.lst.ListItems(i&).Text) + IIf(frmMain.mnuFileTypeWin.Checked, vbCrLf, Chr(10)))
+                        icount& = icount& + 1
+                    End If
+                End If
+                
+                If b_leet = True Then
+                    stemp$ = CaseLeet$(frmMain.lst.ListItems(i&).Text)
+                    If b_first = True And CaseFirst(s$) <> stemp$ Or b_first = False Then
+                        If b_everyother = True And CaseEveryOther(s$) <> stemp$ Or b_everyother = False Then
+                            If s$ <> stemp$ Then
+                                Put #ff%, , CStr(CStr(stemp$) + IIf(frmMain.mnuFileTypeWin.Checked, vbCrLf, Chr(10)))
+                                icount& = icount& + 1
+                            End If
                         End If
                     End If
                 End If
+                lastitem$ = frmMain.lst.ListItems(i&).Text
             End If
         Next i&
     Close #ff%
     
-    stat "saved '" + GetFileName(sfile$) + "'"
+    skipped$ = Format(lcount# - icount&, "###,###")
+    If skipped$ = "" Then skipped$ = "0"
+    stat "saved '" + GetFileName(sfile$) + "'; " + skipped$ + " skipped"
     
     prog 0
 End Sub
@@ -1247,7 +1254,7 @@ Public Function LoadList(sfile$, Optional ShowListAtEnd As Boolean = True) As Bo
                     
                     If InStr(s$, " ") = 0 And InStr(s$, Chr(0)) = 0 Then
                         If FilterCheck(s$) = True Then
-                            frmMain.lst.ListItems().Add , , s$
+                            frmMain.lst.ListItems().add , , s$
                         End If
                     Else
                         ParseTextBlock s$
@@ -1345,7 +1352,7 @@ Public Function LoadList(sfile$, Optional ShowListAtEnd As Boolean = True) As Bo
                         stemp$ = stemp$ + char$
                     Else
                         If stemp$ <> "" And FilterCheck(stemp$) = True Then
-                            frmMain.lst.ListItems().Add , , stemp$
+                            frmMain.lst.ListItems().add , , stemp$
                         End If
                         stemp$ = ""
                     End If
@@ -1353,7 +1360,7 @@ Public Function LoadList(sfile$, Optional ShowListAtEnd As Boolean = True) As Bo
             Loop
             
             If stemp$ <> "" And FilterCheck(stemp$) = True Then
-                frmMain.lst.ListItems().Add , , stemp$
+                frmMain.lst.ListItems().add , , stemp$
             End If
         Close #ff%
         
@@ -1420,7 +1427,7 @@ Public Function LoadList(sfile$, Optional ShowListAtEnd As Boolean = True) As Bo
                     Input #ff%, s$
                     If InStr(s$, " ") = 0 And InStr(s$, Chr(0)) = 0 Then
                         If FilterCheck(s$) = True Then
-                            frmMain.lst.ListItems().Add , , CStr(s$)
+                            frmMain.lst.ListItems().add , , CStr(s$)
                         End If
                     Else
                         ParseTextBlock s$
@@ -1487,7 +1494,7 @@ Public Function LoadList(sfile$, Optional ShowListAtEnd As Boolean = True) As Bo
                             stemp$ = stemp$ + char$
                         Else
                             If stemp$ <> "" And FilterCheck(stemp$) = True Then
-                                frmMain.lst.ListItems().Add , , stemp$
+                                frmMain.lst.ListItems().add , , stemp$
                             End If
                             stemp$ = ""
                         End If
@@ -1495,7 +1502,7 @@ Public Function LoadList(sfile$, Optional ShowListAtEnd As Boolean = True) As Bo
                 Loop
                 
                 If stemp$ <> "" And FilterCheck(stemp$) = True Then
-                    frmMain.lst.ListItems().Add , , stemp$
+                    frmMain.lst.ListItems().add , , stemp$
                 End If
             Close #ff%
             
@@ -1569,6 +1576,7 @@ Public Sub regSet(sSetting As String, sVal As String)
 End Sub
 Public Function getstring(Hkey As Long, strPath As String, strValue As String)
     'retrieves value from registry
+    On Error Resume Next
     Dim keyhand&, datatype&, lresult&, strBuf$, lDataBufSize&, intZeroPos%, lValueType&, r&
     r = RegOpenKey(Hkey, strPath, keyhand)
     lresult = RegQueryValueEx(keyhand, strValue, 0&, lValueType, ByVal 0&, lDataBufSize)
@@ -1587,6 +1595,7 @@ Public Function getstring(Hkey As Long, strPath As String, strValue As String)
             End If
         End If
     End If
+    On Error GoTo 0
 End Function
 
 Public Sub savestring(Hkey&, strPath$, strValue$, strData$)

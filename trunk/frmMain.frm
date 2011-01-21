@@ -2115,7 +2115,7 @@ End Sub
 Private Sub loadCharsets()
     Dim s$, i&, j&, sarr$()
     
-    For i& = 1 To mnuGenStringX.UBound
+    For i& = 1 To mnuGenStringX.ubound
         Unload mnuGenStringX(i&)
     Next i&
     
@@ -2222,7 +2222,7 @@ Private Sub mnuAppendPostAlpha_Click()
     For i& = 0 To UBound(sarr$())
         If i& Mod 10 Then DoEvents
         For j& = 0 To 25
-            lst.ListItems().Add , , sarr$(i&) + Chr(Asc("a") + j&)
+            lst.ListItems().add , , sarr$(i&) + Chr(Asc("a") + j&)
         Next j&
     Next i&
     
@@ -2295,7 +2295,7 @@ Private Sub mnuAppendPostCustom_Click()
         End If
         
         For j& = 0 To UBound(sadd$())
-            lst.ListItems().Add , , sa$(i&) + sadd$(j&)
+            lst.ListItems().add , , sa$(i&) + sadd$(j&)
         Next j&
     Next i&
     
@@ -2341,7 +2341,7 @@ Private Sub mnuAppendPostDefault_Click()
         For j& = 0 To UBound(sadd$())
             s$ = sarr$(i&) + sadd$(j&)
             If FilterCheck(s$) = True Then
-                lst.ListItems().Add , , s$
+                lst.ListItems().add , , s$
             End If
         Next j&
     Next i&
@@ -2392,7 +2392,7 @@ Private Sub mnuAppendPostNum_Click()
     For i& = 0 To UBound(sarr$())
         If i& Mod 25 Then DoEvents
         For j& = 0 To 9
-            lst.ListItems().Add , , sarr$(i&) + CStr(j&)
+            lst.ListItems().add , , sarr$(i&) + CStr(j&)
         Next j&
     Next i&
     
@@ -2438,7 +2438,7 @@ Private Sub mnuAppendPreAlpha_Click()
     For i& = 0 To UBound(sarr$())
         If i& Mod 10 Then DoEvents
         For j& = 0 To 25
-            lst.ListItems().Add , , Chr(Asc("a") + j&) + sarr$(i&)
+            lst.ListItems().add , , Chr(Asc("a") + j&) + sarr$(i&)
         Next j&
     Next i&
     
@@ -2513,7 +2513,7 @@ Private Sub mnuAppendPreCustom_Click()
         End If
         
         For j& = 0 To UBound(sadd$())
-            lst.ListItems().Add , , sadd$(j&) + sa$(i&)
+            lst.ListItems().add , , sadd$(j&) + sa$(i&)
         Next j&
     Next i&
     
@@ -2564,7 +2564,7 @@ Private Sub mnuAppendPreDefault_Click()
         For j& = 0 To UBound(sadd$())
             s$ = sadd$(j&) + sarr$(i&)
             If FilterCheck(s$) = True Then
-                lst.ListItems().Add , , s$
+                lst.ListItems().add , , s$
             End If
         Next j&
     Next i&
@@ -2612,7 +2612,7 @@ Private Sub mnuAppendPreNum_Click()
     For i& = 0 To UBound(sarr$())
         If i& Mod 25 Then DoEvents
         For j& = 0 To 9
-            lst.ListItems().Add , , CStr(j&) + sarr$(i&)
+            lst.ListItems().add , , CStr(j&) + sarr$(i&)
         Next j&
     Next i&
     
@@ -3669,7 +3669,7 @@ Private Sub mnuGenDate_Click(Index As Integer)
                 End Select
                 
                 If FilterCheck(sdate$) = True Then
-                    lst.ListItems().Add , , sdate$
+                    lst.ListItems().add , , sdate$
                 End If
                 count& = count& + 1
             Next id%
@@ -5436,66 +5436,168 @@ Private Sub mnuListClear_Click()
     End If
 End Sub
 
-Private Sub mnuListDupekill_Click()
-    Dim i&, count&
+Private Sub arrAdd(arr$(), add$)
+    Dim ln&
+    ln& = UBound(arr$())
+    ln& = ln& + 1
+    ReDim Preserve arr$(ln&)
+    arr$(ln&) = add$
+End Sub
+Private Sub arrClear(arr$())
+    ReDim arr$(0)
+End Sub
+Private Function arrFind(sarr$(), item$) As Boolean
+    Dim i&
     
-    i& = 1
+    For i& = 0 To UBound(sarr$())
+        If sarr$(i&) = item$ Then
+            arrFind = True
+            Exit Function
+        End If
+    Next i&
+    
+    arrFind = False
+End Function
+
+Private Sub dupekill()
+    Dim i&, count&, ttl&, tempfile$, ff%, lastitem$, sarr$(), item$, removed$, donotadd As Boolean
+    
+    ReDim sarr$(0)
+    
+    ttl& = lst.ListItems().count
     count& = 0
     
     lst.Visible = False
     
-    stat "dupekilling"
-    
-    prog 0.001
-    
-    Do While i& < lst.ListItems().count
-        If i& Mod 250 = 0 Or (count& + i&) Mod 20 = 0 Then
-            DoEvents
-            
-            If lblCancel.Visible = False Then
-                stat "canceled, " + IIf(count& = 0, "0", Format(count&, "###,###")) + " removed"
-                prog 0
-                lst.Visible = True
-                If count& > 0 Then B_CHANGE = True
-                UpdateCaption
-                Exit Sub
+    stat "filtering..."
+    tempfile$ = App.Path + IIf(Right(App.Path, 1) = "\", "", "\") + "_temp.txt"
+    ff% = FreeFile
+    Open tempfile$ For Binary Access Write As #ff%
+        For i& = 1 To ttl&
+            If i& Mod 2500 = 0 Then
+                prog i& / (ttl& * 2)
+                DoEvents
             End If
             
-            UpdateCaption
-            stat "dupekilling; " + IIf(count& = 0, "0", Format(count&, "###,###")) + " removed" '(" + Format(i&, "###,###") + "/" + Format(lst.ListItems().count, "###,###") + ")"
-            prog i& / lst.ListItems().count
-        End If
-        
-        If lst.ListItems(i&).Text = lst.ListItems(i& + 1).Text Then
-            lst.ListItems().Remove i&
-            count& = count& + 1
-            i& = i& - 1
-            If i& < 1 Then i& = 1
-        Else
-            If LCase(lst.ListItems(i&).Text) = LCase(lst.ListItems(i& + 1).Text) And i& < lst.ListItems().count - 1 Then
-                If lst.ListItems(i&).Text = lst.ListItems(i& + 2).Text Then 'Or lst.ListItems(i&).Text = lst.ListItems(i& + 3).Text Then
-                    lst.ListItems().Remove i&
-                    'i& = i& - 1
-                    'If i& < 1 Then i& = 1
-                    count& = count& + 1
+            donotadd = False
+            
+            item$ = lst.ListItems(i&).Text
+            
+            If UBound(sarr$()) > 0 Then
+                If LCase(item$) = LCase(sarr$(1)) Then
+                    If arrFind(sarr$(), item$) = True Then
+                        donotadd = True
+                    End If
                 Else
-                    i& = i& + 1
+                    arrClear sarr$()
                 End If
-            Else
-                i& = i& + 1
             End If
-        End If
-        
-    Loop
+            
+            If donotadd = False Then
+                count& = count& + 1
+                Put #ff%, , CStr(item$ + vbCrLf)
+            End If
+            
+            arrAdd sarr$(), item$
+        Next i&
+    Close #ff%
     
-    If count& > 0 Then B_CHANGE = True
+    stat "clearing..."
+    lst.ListItems().Clear
     
-    prog 0
+    stat "loading..."
+    i& = 0
+    ff% = FreeFile
+    Open tempfile$ For Input As #ff%
+        While Not EOF(ff%)
+            i& = i& + 1
+            If i& Mod 2500 = 0 Then
+                prog (count& + i&) / (count& * 2)
+                DoEvents
+            End If
+            Input #ff%, item$
+            lst.ListItems().add , , item$
+        Wend
+    Close #ff%
+    
+    stat "displaying..."
     lst.Visible = True
     
-    UpdateCaption
+    On Error Resume Next
+    Kill tempfile$
+    On Error GoTo 0
     
-    stat "inactive; " + IIf(count& = 0, "0", Format(count&, "###,###")) + " removed"
+    removed$ = Format(ttl& - count&, "###,###")
+    If removed$ = "" Then removed$ = "0"
+    stat "inactive; " + removed$ + " removed"
+    
+    prog 0
+    UpdateCaption
+End Sub
+
+Private Sub mnuListDupekill_Click()
+    Dim i&, count&
+    
+    dupekill
+    Exit Sub
+'
+'    i& = 1
+'    count& = 0
+'
+'    lst.Visible = False
+'
+'    stat "dupekilling"
+'
+'    prog 0.001
+'
+'    Do While i& < lst.ListItems().count
+'        If i& Mod 250 = 0 Or (count& + i&) Mod 20 = 0 Then
+'            DoEvents
+'
+'            If lblCancel.Visible = False Then
+'                stat "canceled, " + IIf(count& = 0, "0", Format(count&, "###,###")) + " removed"
+'                prog 0
+'                lst.Visible = True
+'                If count& > 0 Then B_CHANGE = True
+'                UpdateCaption
+'                Exit Sub
+'            End If
+'
+'            UpdateCaption
+'            stat "dupekilling; " + IIf(count& = 0, "0", Format(count&, "###,###")) + " removed" '(" + Format(i&, "###,###") + "/" + Format(lst.ListItems().count, "###,###") + ")"
+'            prog i& / lst.ListItems().count
+'        End If
+'
+'        If lst.ListItems(i&).Text = lst.ListItems(i& + 1).Text Then
+'            lst.ListItems().Remove i&
+'            count& = count& + 1
+'            i& = i& - 1
+'            If i& < 1 Then i& = 1
+'        Else
+'            If LCase(lst.ListItems(i&).Text) = LCase(lst.ListItems(i& + 1).Text) And i& < lst.ListItems().count - 1 Then
+'                If lst.ListItems(i&).Text = lst.ListItems(i& + 2).Text Then 'Or lst.ListItems(i&).Text = lst.ListItems(i& + 3).Text Then
+'                    lst.ListItems().Remove i&
+'                    'i& = i& - 1
+'                    'If i& < 1 Then i& = 1
+'                    count& = count& + 1
+'                Else
+'                    i& = i& + 1
+'                End If
+'            Else
+'                i& = i& + 1
+'            End If
+'        End If
+'
+'    Loop
+'
+'    If count& > 0 Then B_CHANGE = True
+'
+'    prog 0
+'    lst.Visible = True
+'
+'    UpdateCaption
+'
+'    stat "inactive; " + IIf(count& = 0, "0", Format(count&, "###,###")) + " removed"
 End Sub
 
 Private Sub mnuListFind_Click()

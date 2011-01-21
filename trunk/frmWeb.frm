@@ -80,6 +80,16 @@ Begin VB.Form frmWeb
       TabIndex        =   6
       Top             =   840
       Width           =   5895
+      Begin VB.CheckBox chkDomain 
+         BackColor       =   &H00000000&
+         Caption         =   "stay within domain"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   3000
+         TabIndex        =   11
+         Top             =   600
+         Width           =   2535
+      End
       Begin VB.CheckBox chkCrawl 
          BackColor       =   &H00000000&
          Caption         =   "'crawl' through links found on each page"
@@ -105,7 +115,7 @@ Begin VB.Form frmWeb
          Enabled         =   0   'False
          ForeColor       =   &H00FFFFFF&
          Height          =   360
-         Left            =   2280
+         Left            =   1920
          TabIndex        =   3
          Text            =   "5"
          Top             =   600
@@ -120,10 +130,10 @@ Begin VB.Form frmWeb
          Enabled         =   0   'False
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   720
+         Left            =   390
          OLEDropMode     =   1  'Manual
          TabIndex        =   7
-         Top             =   660
+         Top             =   630
          Width           =   1455
       End
    End
@@ -205,6 +215,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Public is_running As Boolean, total_count&
+Dim surls$()
 
 Private Sub stat(s$)
     lblStat.Caption = " " + s$
@@ -243,11 +254,19 @@ End Sub
 Private Sub chkCrawl_Click()
     txtDepth.Enabled = CBool(chkCrawl.Value)
     lblDepth.Enabled = CBool(chkCrawl.Value)
+    chkDomain.Enabled = CBool(chkCrawl.Value)
+    
     regSet "web_crawl", chkCrawl.Value
+End Sub
+
+Private Sub chkDomain_Click()
+    regSet "web_domain", chkDomain.Value
 End Sub
 
 Private Sub Form_Load()
     Dim i&, sarr$()
+    
+    ReDim surls$(0)
     
     is_running = False
     
@@ -259,25 +278,45 @@ Private Sub Form_Load()
         lblDepth.Enabled = CBool(chkCrawl.Value)
     End If
     
+    If regGet("web_domain") = "1" Then
+        chkDomain.Value = 1
+    End If
+    
     txtDepth.Text = regGet("web_depth")
     If txtDepth.Text = "" Or IsNumeric(txtDepth.Text) = False Then
         txtDepth.Text = "5"
     End If
     
-    sarr$() = Split(regGet("web_urls"), "|||")
+    stat "loading urls..."
+    sarr$() = Split(regGet("web_urls"), Chr(9))
     For i& = 0 To UBound(sarr$())
         If Trim(sarr$(i&)) <> "" Then
             cboURLs.AddItem sarr$(i&)
         End If
+        If i& Mod 500 = 0 Then
+            DoEvents
+            stat "loaded " + Format(cboURLs.ListCount, "###,###") + " urls"
+        End If
+        
     Next i&
+    If cboURLs.ListCount > 0 Then
+        stat "loaded " + Format(cboURLs.ListCount, "###,###") + " urls"
+    Else
+        stat "inactive"
+    End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    Dim s$, i&
+    Dim s$, i&, max&
+    
+    max& = 500
+    If cboURLs.ListCount - 1 < max& Then
+        max& = cboURLs.ListCount - 1
+    End If
     
     s$ = ""
-    For i& = 0 To cboURLs.ListCount - 1
-        s$ = s$ + cboURLs.List(i&) + "|||"
+    For i& = 0 To max&
+        s$ = s$ + cboURLs.List(i&) + Chr(9)
     Next i&
     regSet "web_urls", s$
     
@@ -292,6 +331,7 @@ End Sub
 Private Sub lblStart_Click()
     lst.Clear
     If lblStart.Caption = "START" Then
+        total_count& = 0
         If Trim(cboURLs.Text) <> "" Then
             cboURLs_KeyPress 13
         End If
@@ -339,25 +379,38 @@ Private Sub searchurls()
     tempsite$ = url$
     If Len(tempsite$) > 32 Then tempsite$ = Left(tempsite$, 32)
     
-    sttl$ = Format(cboURLs.ListCount, "###, ###")
+    sttl$ = Trim(Format(cboURLs.ListCount, "###,###"))
     If sttl$ = "" Then sttl$ = "0"
     
-    stat sttl$ + " remain; downloading " + tempsite$ + "..."
+    stat "" + sttl$ + " remain; downloading " + tempsite$ + "..."
     s$ = webgetsource$(url$)
     stat sttl$ + " remain; parsing " + tempsite$ + "..."
     total_count& = total_count& + ParseWebData&(s$)
     updatecount
     
-    If chkCrawl.Value = vbChecked And depth% + 1 < CLng(txtDepth.Text) Then
+    If chkCrawl.Value = vbChecked And depth% < CLng(txtDepth.Text) Then
         stat sttl$ + " remain; crawling " + tempsite$ + "..."
-        CrawlURLs s$, depth% + 1
+        CrawlURLs url$, s$, depth% + 1
     End If
     
     searchurls
 End Sub
 
-Private Sub CrawlURLs(source$, depth%)
-    Dim i&, j&, s$
+Private Sub CrawlURLs(url$, source$, depth%)
+    Dim i&, j&, s$, domain$, sarr$(), donotadd As Boolean
+    
+    domain$ = LCase(url$)
+    domain$ = Replace(domain$, "http://", "")
+    domain$ = Replace(domain$, "https://", "")
+    
+    j& = InStr(domain$, "/")
+    If j& = 0 Then j& = Len(domain$) + 1
+    domain$ = Left(domain$, j& - 1)
+    
+    sarr$() = Split(domain$, ".")
+    If UBound(sarr$) = 0 Then Exit Sub
+    
+    domain$ = sarr$(UBound(sarr$()) - 1) + "." + sarr$(UBound(sarr$()))
     
     i& = 0
     Do
@@ -367,7 +420,36 @@ Private Sub CrawlURLs(source$, depth%)
         If i& <> 0 And j& <> 0 Then
             i& = i& + Len("href=X")
             s$ = Mid(source$, i&, j& - i&)
-            AddUrl s$, depth% + 1
+            If Left(s$, 1) = "/" Then
+                s$ = "http://" + domain$ + s$
+            End If
+            
+            donotadd = False
+            
+            If Left(s$, 1) = "#" Then
+                donotadd = True
+            End If
+            
+            If chkDomain.Value = 1 And InStr(LCase(s$), domain$) = 0 Then
+                donotadd = True
+            End If
+            
+            If Left(LCase(s$), 4) <> "http" Then
+                donotadd = True
+            End If
+            
+            If InStr(s$, "favicon.ico") <> 0 Or InStr(s$, ".css") <> 0 Or InStr(s$, "imgur.com") <> 0 Then
+                donotadd = True
+            End If
+            
+            Select Case Right(LCase(s$), 4)
+            Case ".jpg", "jpeg", ".bmp", ".png", ".gif", ".pdf", ".doc", "docx"
+                donotadd = True
+            End Select
+            
+            If donotadd = False Then
+                AddUrl s$, depth% + 1
+            End If
         End If
     Loop Until i& = 0
 End Sub
@@ -375,12 +457,16 @@ End Sub
 Private Function UrlLookup(url$) As Boolean
     Dim i&
     
-    For i& = 0 To lst.ListCount - 1
-        If InStr(lst.List(i&), "," + url$ + ",") <> 0 Then
+    stat "checking for url duplicate..."
+    For i& = 0 To UBound(surls$())
+        DoEvents
+        If InStr(surls$(i&), "," + url$ + ",") <> 0 Then
+            stat "duplicate found"
             UrlLookup = True
             Exit Function
         End If
     Next i&
+    stat "no dupe found"
     UrlLookup = False
 End Function
 
@@ -389,24 +475,25 @@ Private Function AddUrl(url$, depth%) As Boolean
     added = False
     
     If UrlLookup(url$) = False Then
-        i& = lst.ListCount - 1
+        added = True
+        i& = UBound(surls$()) - 1
         If i& < 0 Then
-            lst.AddItem "," + url$ + ","
-            added = True
+            ReDim surls$(0)
+            surls$(0) = "," + url$ + ","
         Else
-            If Len(lst.List(i&)) > 5000 Then
-                lst.AddItem "," + url$ + ","
-                added = True
+            If Len(surls$(i&)) > 10000 Then
+                ReDim Preserve surls$(i& + 1)
+                surls$(i& + 1) = "," + url$ + ","
             Else
-                lst.List(i&) = lst.List(i&) + "," + url$ + ","
-                added = True
+                surls$(i&) = surls$(i&) + url$ + ","
             End If
         End If
     End If
     
-    If added = True Then
+    If added = True And cboURLs.ListCount < 32765 Then
         cboURLs.AddItem "(" + CStr(depth%) + ")" + url$
     End If
+    stat "pending urls: " + Format(cboURLs.ListCount, "###,###")
 End Function
 
 Private Sub txtDepth_Change()
