@@ -20,7 +20,6 @@ Begin VB.Form frmMain
       Strikethrough   =   0   'False
    EndProperty
    ForeColor       =   &H00000000&
-   Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -1627,12 +1626,16 @@ Private Sub Form_Load()
     Else
         Me.Left = (Screen.Width - Me.Width) / 2
     End If
+    
     s$ = regGet("y")
     If IsNumeric(s$) = True Then
         Me.Top = CLng(s$)
     Else
         Me.Top = (Screen.Height - Me.Height) / 2
     End If
+    
+    If Me.Left > Screen.Width Then Me.Left = 0
+    If Me.Top > Screen.Height Then Me.Top = 0
     
     'first load gets welcome screen
     If regGet("firstload?") = "" Then
@@ -2115,7 +2118,7 @@ End Sub
 Private Sub loadCharsets()
     Dim s$, i&, j&, sarr$()
     
-    For i& = 1 To mnuGenStringX.ubound
+    For i& = 1 To mnuGenStringX.UBound
         Unload mnuGenStringX(i&)
     Next i&
     
@@ -2154,8 +2157,8 @@ End Sub
 Private Sub mnuHelpAbout_Click()
     Dim s$, version$, day$
     
-    version$ = "0.96"
-    day$ = "19jan2011"
+    version$ = "0.994"
+    day$ = "24feb2012"
     
     Select Case LANGUAGE$
     Case "english"

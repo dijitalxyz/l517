@@ -3,13 +3,13 @@ Begin VB.Form frmMsg
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
    Caption         =   "L517"
-   ClientHeight    =   3060
+   ClientHeight    =   270
    ClientLeft      =   120
    ClientTop       =   420
-   ClientWidth     =   4560
+   ClientWidth     =   2250
    LinkTopic       =   "Form1"
-   ScaleHeight     =   3060
-   ScaleWidth      =   4560
+   ScaleHeight     =   270
+   ScaleWidth      =   2250
    Visible         =   0   'False
 End
 Attribute VB_Name = "frmMsg"
@@ -29,8 +29,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Form_Load()
-    Me.Left = Screen.Width
-    Me.Top = Screen.Height
+    Me.Left = Screen.Width * 2
+    Me.Top = Screen.Height * 2
 End Sub
 
 Public Function MsgBocks(sMsg$, Optional sDat As VbMsgBoxStyle = 0, Optional sTitle$ = "L517") As VbMsgBoxResult
