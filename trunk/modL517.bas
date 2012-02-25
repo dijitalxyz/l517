@@ -1488,7 +1488,7 @@ Public Function LoadList(sfile$, Optional ShowListAtEnd As Boolean = True) As Bo
                     
                     current& = current& + chunk%
                     
-                    For i& = 1 To chunk%
+                    For i& = 0 To chunk%
                         char$ = Chr(Format$(bbytes(i&)))
                         If char$ <> Chr(10) And char$ <> " " Then
                             stemp$ = stemp$ + char$
@@ -1502,6 +1502,7 @@ Public Function LoadList(sfile$, Optional ShowListAtEnd As Boolean = True) As Bo
                 Loop
                 
                 If stemp$ <> "" And FilterCheck(stemp$) = True Then
+                    'stemp$ = Replace(stemp$, Chr(13), "")
                     frmMain.lst.ListItems().add , , stemp$
                 End If
             Close #ff%
